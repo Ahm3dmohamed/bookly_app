@@ -1,4 +1,4 @@
-import 'package:bookly/core/utils/assets.dart';
+import 'package:bookly/core/utils/assets_images.dart';
 import 'package:flutter/material.dart';
 
 class SplashViewBody extends StatelessWidget {
@@ -15,6 +15,11 @@ class SplashViewBody extends StatelessWidget {
             AssetsImages.logo,
             color: Colors.white,
           ),
+          const Text(
+            "Read more books",
+            style: TextStyle(fontSize: 16, color: Colors.white),
+            textAlign: TextAlign.center,
+          )
         ],
       ),
     );
