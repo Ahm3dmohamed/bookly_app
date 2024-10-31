@@ -1,4 +1,4 @@
-import 'package:bookly/features/splash/presentation/views/constants.dart';
+import 'package:bookly/features/splash/constants.dart';
 import 'package:flutter/material.dart';
 
 class AppTheme {
