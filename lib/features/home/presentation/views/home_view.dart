@@ -1,12 +1,12 @@
 import 'package:bookly/core/config/size_config.dart';
 import 'package:bookly/core/utils/assets_images.dart';
-import 'package:bookly/features/home/presentation/views/search/search.dart';
+import 'package:bookly/features/home/presentation/views/custom_bottomnavigation.dart';
 import 'package:bookly/features/home/presentation/views/search/widgets/custom_book_lstview.dart';
 import 'package:bookly/features/home/presentation/views/widgets/custom_appbar.dart';
-import 'package:bookly/features/splash/constants.dart';
+import 'package:bookly/constants.dart';
+import 'package:bookly/features/home/presentation/views/widgets/home_view_details.dart';
 import 'package:flutter/material.dart';
 import 'package:overlapped_carousel/overlapped_carousel.dart';
-import 'package:page_transition/page_transition.dart';
 
 class HomeView extends StatelessWidget {
   HomeView({super.key});
@@ -30,59 +30,16 @@ class HomeView extends StatelessWidget {
         ),
       ),
     );
-
-    // List<CardItem> books = [
-    //   ImageCarditem(
-    //     image: Image.asset(
-    //       AssetsImages.bookImage,
-    //       height: carouselImageHeight,
-    //       width: carouselImageWidth,
-    //       fit: BoxFit.cover,
-    //     ),
-    //   ),
-    //   ImageCarditem(
-    //     image: Image.asset(
-    //       AssetsImages.bookImage,
-    //       height: carouselImageHeight,
-    //       width: carouselImageWidth,
-    //       fit: BoxFit.cover,
-    //       scale: 12,
-    //     ),
-    //   ),
-    //   ImageCarditem(
-    //     image: Image.asset(
-    //       AssetsImages.bookImage,
-    //       height: carouselImageHeight,
-    //       width: carouselImageWidth,
-    //       fit: BoxFit.cover,
-    //     ),
-    //   ),
-    //   ImageCarditem(
-    //     image: Image.asset(
-    //       AssetsImages.bookImage,
-    //       height: carouselImageHeight,
-    //       width: carouselImageWidth,
-    //       fit: BoxFit.cover,
-    //     ),
-    //   ),
-    //   ImageCarditem(
-    //     image: Image.asset(
-    //       AssetsImages.bookImage,
-    //       height: carouselImageHeight,
-    //       width: carouselImageWidth,
-    //       fit: BoxFit.cover,
-    //     ),
-    //   ),
-    //   // Repeat for other ImageCardItems if needed
     // ];
     return SafeArea(
       child: Scaffold(
+        bottomNavigationBar: const CustomBottomNavigation(),
         backgroundColor: kPrimaryColor,
         body: Padding(
           padding: EdgeInsets.all(SizeConfig.width(3)),
           child: Column(
             children: [
-              CustomAppbar(),
+              const CustomAppbar(),
               Padding(
                 padding: EdgeInsets.only(
                   left: SizeConfig.screenHeight * .01,
@@ -99,7 +56,7 @@ class HomeView extends StatelessWidget {
                   ),
                 ),
               ),
-              Flexible(
+              Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -116,11 +73,9 @@ class HomeView extends StatelessWidget {
                         ),
                       ),
                     ),
-                    CustomBookListview(),
-                    // HorizontalCardPager(
-                    //   initialPage: 2,
-                    //   items: books,
-                    // )
+                    CustomBookListview(
+                      axis: Axis.vertical,
+                    ),
                   ],
                 ),
               ),

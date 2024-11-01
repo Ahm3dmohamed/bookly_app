@@ -1,5 +1,5 @@
 import 'package:bookly/features/home/presentation/views/search/widgets/custom_search_textfield.dart';
-import 'package:bookly/features/splash/constants.dart';
+import 'package:bookly/constants.dart';
 import 'package:flutter/material.dart';
 
 class Search extends StatelessWidget {
