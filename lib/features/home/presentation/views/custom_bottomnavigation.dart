@@ -12,8 +12,8 @@ class CustomBottomNavigation extends StatelessWidget {
         padding: const EdgeInsets.only(right: 34, left: 34),
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.grey.withOpacity(0.3), // Semi-transparent background
-            borderRadius: BorderRadius.circular(20), // Rounded corners
+            color: Colors.grey.withOpacity(0.3),
+            borderRadius: BorderRadius.circular(20),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: const Row(

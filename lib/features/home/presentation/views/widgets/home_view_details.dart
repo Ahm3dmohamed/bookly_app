@@ -122,17 +122,41 @@ class HomeViewDetails extends StatelessWidget {
             height: SizeConfig.height(1),
           ),
 
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text(
                 "    You can also like",
-                style: Styles.textStyle16,
+                style: Styles.textStyle16.copyWith(
+                  fontFamily: kGtSectraFine,
+                ),
               ),
             ],
           ),
-
-          CustomBookListview(axis: Axis.vertical),
+          Expanded(
+              child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: 15,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(18),
+                      child: Image.asset(
+                        height: SizeConfig.height(20),
+                        width: SizeConfig.width(30),
+                        AssetsImages.bookImage,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ))
         ],
       ),
     );
