@@ -126,7 +126,7 @@ class HomeViewDetails extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text(
-                "    You can also like",
+                "    You can also like  ",
                 style: Styles.textStyle16.copyWith(
                   fontFamily: kGtSectraFine,
                 ),

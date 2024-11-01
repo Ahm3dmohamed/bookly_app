@@ -73,9 +73,7 @@ class HomeView extends StatelessWidget {
                         ),
                       ),
                     ),
-                    CustomBookListview(
-                      axis: Axis.vertical,
-                    ),
+                    CustomBookListview(),
                   ],
                 ),
               ),
