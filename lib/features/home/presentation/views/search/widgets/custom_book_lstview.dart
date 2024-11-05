@@ -66,7 +66,7 @@ class CustomBookListview extends StatelessWidget {
                     Row(
                       children: [
                         const Text(
-                          "19.99 P",
+                          "  19.99 P",
                           maxLines: 4,
                           style: TextStyle(
                               fontSize: 16,

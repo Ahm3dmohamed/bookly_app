@@ -1,6 +1,6 @@
 import 'package:bookly/core/utils/assets_images.dart';
 import 'package:bookly/features/home/presentation/views/home_view.dart';
-import 'package:bookly/features/splash/presentation/views/widgets/sliding_text.dart';
+import 'package:bookly/features/home/presentation/views/splash/sliding_text.dart';
 import 'package:flutter/material.dart';
 
 class SplashViewBody extends StatefulWidget {

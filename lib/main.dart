@@ -1,6 +1,6 @@
 import 'package:bookly/constants.dart';
+import 'package:bookly/features/home/presentation/views/splash/splash_view.dart';
 // import 'package:bookly/home.dart';
-import 'package:bookly/features/splash/presentation/views/splash_view.dart';
 import 'package:flutter/material.dart';
 
 void main() {

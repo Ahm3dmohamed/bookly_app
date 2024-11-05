@@ -2,7 +2,6 @@ import 'package:bookly/constants.dart';
 import 'package:bookly/core/config/size_config.dart';
 import 'package:bookly/core/utils/assets_images.dart';
 import 'package:bookly/core/utils/style.dart';
-import 'package:bookly/features/home/presentation/views/search/widgets/custom_book_lstview.dart';
 import 'package:flutter/material.dart';
 
 class HomeViewDetails extends StatelessWidget {
@@ -121,7 +120,6 @@ class HomeViewDetails extends StatelessWidget {
           SizedBox(
             height: SizeConfig.height(1),
           ),
-
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
