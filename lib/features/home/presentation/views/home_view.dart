@@ -4,7 +4,6 @@ import 'package:bookly/features/home/presentation/views/custom_bottomnavigation.
 import 'package:bookly/features/home/presentation/views/search/widgets/custom_book_lstview.dart';
 import 'package:bookly/features/home/presentation/views/widgets/custom_appbar.dart';
 import 'package:bookly/constants.dart';
-import 'package:bookly/features/home/presentation/views/widgets/home_view_details.dart';
 import 'package:flutter/material.dart';
 import 'package:overlapped_carousel/overlapped_carousel.dart';
 
