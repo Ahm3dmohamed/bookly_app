@@ -5,6 +5,8 @@ import 'package:bookly/features/home/data/models/repos/home_repo.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 
+// MVVM
+
 class HomeRepoImpl extends HomeRepo {
   ApiService apiService;
   HomeRepoImpl(this.apiService);
@@ -14,6 +16,8 @@ class HomeRepoImpl extends HomeRepo {
     try {
       var data = await apiService.get(
           endPoint: 'volumes?Filtering=free-ebooks&q=subject:programming');
+
+      // https://www.googleapis.com/books/v1/volumes?Filtering=free-ebooks&q=programming
       List<BookModel> books = [];
       for (var item in data["items"]) {
         books.add(BookModel.fromJson(item));
@@ -36,7 +40,20 @@ class HomeRepoImpl extends HomeRepo {
     try {
       var data =
           await apiService.get(endPoint: 'volumes?q=subject:programming');
-    } catch (e) {}
-    throw UnimplementedError();
+      List<BookModel> books = [];
+      for (var item in data["items"]) {
+        books.add(BookModel.fromJson(item));
+      }
+      return right(books);
+    } on Exception catch (e) {
+      if (e is DioException) {
+        return left(
+          ServerFailure.fromDioError(e),
+        );
+      }
+      return left(ServerFailure(
+        e.toString(),
+      ));
+    }
   }
 }
