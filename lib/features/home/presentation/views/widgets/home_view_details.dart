@@ -12,27 +12,7 @@ class HomeViewDetails extends StatelessWidget {
     double carouselImageHeight = MediaQuery.of(context).size.height * 0.37;
     double carouselImageWidth = carouselImageHeight * 0.66;
     return Scaffold(
-      appBar: AppBar(
-          backgroundColor: kPrimaryColor,
-          leading: IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: const Icon(
-                Icons.close,
-                color: Colors.white,
-              )),
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.shopping_cart_outlined,
-                    color: Colors.white,
-                  )),
-            ],
-          )),
+      // appBar:  HomeDetailsAppbar(),
       body: Column(
         children: [
           ClipRRect(
@@ -158,5 +138,36 @@ class HomeViewDetails extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class HomeDetailsAppbar extends StatelessWidget {
+  const HomeDetailsAppbar({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+        backgroundColor: kPrimaryColor,
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(
+              Icons.close,
+              color: Colors.white,
+            )),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.shopping_cart_outlined,
+                  color: Colors.white,
+                )),
+          ],
+        ));
   }
 }

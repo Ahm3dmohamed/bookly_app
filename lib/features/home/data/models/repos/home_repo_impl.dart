@@ -14,8 +14,8 @@ class HomeRepoImpl extends HomeRepo {
   @override
   Future<Either<Failures, BookModel>> fetchFutureBooks() async {
     try {
-      var data =
-          await apiService.get(endPoint: 'volumes?Filtering=partial&q=partial');
+      var data = await apiService.get(
+          endPoint: 'volumes?Filtering=ebooks&q=inpublisher');
       BookModel books = BookModel.fromJson(data); // Parse the entire response
       return right(books);
     } on Exception catch (e) {
@@ -31,8 +31,7 @@ class HomeRepoImpl extends HomeRepo {
       {int startIndex = 0}) async {
     try {
       var data = await apiService.get(
-          endPoint:
-              'volumes?Filtering=free-ebooks&startIndex=$startIndex&q=Computers');
+          endPoint: 'volumes?Filtering=free-ebooks&q=subject');
 
       BookModel books = BookModel.fromJson(data);
       //

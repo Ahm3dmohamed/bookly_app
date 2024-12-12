@@ -1,4 +1,6 @@
 import 'package:bookly/core/config/size_config.dart';
+import 'package:bookly/features/home/presentation/views/widgets/home_view_details.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bookly/core/utils/widgets/custom_error_widget.dart';
@@ -54,41 +56,44 @@ class FeatureBookSListView extends StatelessWidget {
                 final title = book?.title ?? "Untitled";
                 final authors = book?.authors?.join(", ") ?? "Unknown Author";
 
-                return Container(
-                  width: carouselImageWidth,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(8),
-                        child: imageUrl != null
-                            ? Image.network(
-                                imageUrl,
-                                height: carouselImageHeight,
-                                width: carouselImageWidth,
-                                fit: BoxFit.fill,
-                                errorBuilder: (context, error, stackTrace) =>
-                                    const Icon(Icons.broken_image, size: 50),
-                              )
-                            : const Icon(
-                                Icons.broken_image,
-                                size: 50,
-                                color: Colors.grey,
-                              ),
-                      ),
-                      const SizedBox(height: 8),
-                      Flexible(
-                        child: Text(
-                          title,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => HomeViewDetails(),
+                        ));
+                  },
+                  child: SizedBox(
+                    width: carouselImageWidth,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(15),
+                          child: CachedNetworkImage(
+                            imageUrl: imageUrl!,
+                            height: carouselImageHeight,
+                            width: carouselImageWidth,
+                            fit: BoxFit.fill,
+                            errorWidget: (context, url, error) =>
+                                const Icon(Icons.error_outline),
                           ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
                         ),
-                      ),
-                    ],
+                        const SizedBox(height: 8),
+                        Flexible(
+                          child: Text(
+                            title,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 );
               },
