@@ -1,4 +1,4 @@
-import 'package:bookly/features/home/presentation/views/search/widgets/custom_search_textfield.dart';
+import 'package:bookly/core/utils/widgets/custom_search_textfield.dart';
 import 'package:bookly/constants.dart';
 import 'package:flutter/material.dart';
 

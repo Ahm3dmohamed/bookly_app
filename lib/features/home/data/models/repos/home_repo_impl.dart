@@ -12,38 +12,30 @@ class HomeRepoImpl extends HomeRepo {
   HomeRepoImpl(this.apiService);
 
   @override
-  Future<Either<Failures, List<BookModel>>> fetchNewsBestBooks() async {
+  Future<Either<Failures, BookModel>> fetchFutureBooks() async {
     try {
-      var data = await apiService.get(
-          endPoint: 'volumes?Filtering=free-ebooks&q=subject:programming');
-
-      // https://www.googleapis.com/books/v1/volumes?Filtering=free-ebooks&q=programming
-      List<BookModel> books = [];
-      for (var item in data["items"]) {
-        books.add(BookModel.fromJson(item));
-      }
+      var data =
+          await apiService.get(endPoint: 'volumes?Filtering=partial&q=partial');
+      BookModel books = BookModel.fromJson(data); // Parse the entire response
       return right(books);
     } on Exception catch (e) {
       if (e is DioException) {
-        return left(
-          ServerFailure.fromDioError(e),
-        );
+        return left(ServerFailure.fromDioError(e));
       }
-      return left(ServerFailure(
-        e.toString(),
-      ));
+      return left(ServerFailure(e.toString()));
     }
   }
 
   @override
-  Future<Either<Failures, List<BookModel>>> fetchFutureBooks() async {
+  Future<Either<Failures, BookModel>> fetchNewsBestBooks(
+      {int startIndex = 0}) async {
     try {
-      var data =
-          await apiService.get(endPoint: 'volumes?q=subject:programming');
-      List<BookModel> books = [];
-      for (var item in data["items"]) {
-        books.add(BookModel.fromJson(item));
-      }
+      var data = await apiService.get(
+          endPoint:
+              'volumes?Filtering=free-ebooks&startIndex=$startIndex&q=Computers');
+
+      BookModel books = BookModel.fromJson(data);
+      //
       return right(books);
     } on Exception catch (e) {
       if (e is DioException) {

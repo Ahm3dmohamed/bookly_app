@@ -11,7 +11,7 @@ class FeaturesBookIntail extends FeaturesBookState {}
 class FeaturesBookLoading extends FeaturesBookState {}
 
 class FeaturesBookSuccess extends FeaturesBookState {
-  final List<BookModel> books;
+  final BookModel books;
 
   FeaturesBookSuccess({required this.books});
 }
