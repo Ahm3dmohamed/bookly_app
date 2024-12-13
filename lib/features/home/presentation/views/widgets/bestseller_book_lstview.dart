@@ -36,7 +36,7 @@ class BestSellerBookListview extends StatelessWidget {
             },
           );
         } else {
-          return const CustomLoadingindicatorWidget();
+          return const CustomLoadingIndicatorWidget();
         }
       },
     );

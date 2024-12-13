@@ -20,6 +20,7 @@ class FeatureBookSListView extends StatelessWidget {
           return CustomErrorWidget(errMessage: state.errorMessage);
         } else if (state is FeaturesBookSuccess) {
           return SizedBox(
+            // height: 120, // Space for image + title
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
               padding: const EdgeInsets.only(top: 16),
@@ -39,7 +40,7 @@ class FeatureBookSListView extends StatelessWidget {
             ),
           );
         } else {
-          return const CustomLoadingindicatorWidget();
+          return const CustomLoadingIndicatorWidget();
         }
       },
     );
