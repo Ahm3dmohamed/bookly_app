@@ -1,173 +1,181 @@
 import 'package:bookly/constants.dart';
 import 'package:bookly/core/config/size_config.dart';
-import 'package:bookly/core/utils/assets_images.dart';
 import 'package:bookly/core/utils/style.dart';
+import 'package:bookly/features/home/data/models/book_model/item.dart';
+import 'package:bookly/features/home/data/models/book_model/volume_info.dart';
+import 'package:bookly/features/home/presentation/views/widgets/custom_book_image.dart';
+import 'package:bookly/features/home/presentation/views/widgets/custom_homedetails_appbar.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class HomeViewDetails extends StatelessWidget {
-  const HomeViewDetails({super.key});
+  final VolumeInfo? volumeInfo;
+  final List<Item>? similarBooks;
+
+  const HomeViewDetails({
+    required this.volumeInfo,
+    required this.similarBooks,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    double carouselImageHeight = MediaQuery.of(context).size.height * 0.37;
+    double carouselImageHeight = MediaQuery.of(context).size.height * 0.30;
     double carouselImageWidth = carouselImageHeight * 0.66;
+
     return Scaffold(
-      // appBar:  HomeDetailsAppbar(),
+      appBar: HomeDetailsAppbar(),
       body: Column(
         children: [
+          // Book thumbnail
           ClipRRect(
-            borderRadius: const BorderRadius.all(Radius.circular(8.0)),
-            child: Image.asset(
-              AssetsImages.testImage,
+            borderRadius: BorderRadius.circular(12),
+            child: CachedNetworkImage(
               height: carouselImageHeight,
               width: carouselImageWidth,
+              imageUrl: volumeInfo?.imageLinks?.thumbnail ??
+                  'https://via.placeholder.com/150',
               fit: BoxFit.cover,
+              errorWidget: (context, url, error) =>
+                  const Icon(Icons.error, color: Colors.red),
             ),
           ),
-          const Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.only(left: 8.0),
-                child: Text(
-                  maxLines: 4,
-                  "Harry Botter\n  and the Globalet\n of fire",
-                  style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.white,
-                      fontFamily: "bookfont"),
+          const SizedBox(height: 12),
+          // Book title, description, and rating
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                Text(
+                  volumeInfo?.title ?? "Unknown Title",
+                  style: Styles.textStyle18.copyWith(color: Colors.white),
                 ),
-              ),
-              Text(
-                maxLines: 4,
-                "Ahmed Hamada",
-                style: TextStyle(
-                    fontSize: 12, color: Colors.grey, fontFamily: "bookfont"),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.star,
-                    color: Colors.amber,
+                const SizedBox(height: 8),
+                Text(
+                  maxLines: 5,
+                  volumeInfo?.description ?? "No description available.",
+                  style: const TextStyle(
+                    fontSize: 18,
+                    color: Colors.grey,
+                    fontFamily: "bookfont",
                   ),
-                  Text("4.8 ${"(2478)"}",
-                      style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.grey,
-                          fontFamily: "bookfont")),
-                ],
-              ),
-            ],
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.star, color: Colors.amber),
+                    Text(
+                      "4.8 | ${volumeInfo?.pageCount?.toString() ?? "No Pages"} pages",
+                      style: const TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey,
+                        fontFamily: "bookfont",
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
+          const SizedBox(height: 16),
+          // Price and free preview buttons
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Container(
-                padding: EdgeInsets.all(
-                  SizeConfig.width(3),
-                ),
+                padding: EdgeInsets.all(SizeConfig.width(3)),
                 margin: EdgeInsets.only(left: SizeConfig.width(9), top: 8),
                 decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(24),
-                        bottomLeft: Radius.circular(24))),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(24),
+                    bottomLeft: Radius.circular(24),
+                  ),
+                ),
                 child: const Text(
-                  "     19.99 #  \t\t",
+                  "     \$19.99     ",
                   style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.black,
-                      fontFamily: "bookfont"),
+                    fontSize: 18,
+                    color: Colors.black,
+                    fontFamily: "bookfont",
+                  ),
                 ),
               ),
               Container(
-                padding: EdgeInsets.all(
-                  SizeConfig.width(3),
-                ),
+                padding: EdgeInsets.all(SizeConfig.width(3)),
                 margin: EdgeInsets.only(right: SizeConfig.width(14), top: 8),
                 decoration: const BoxDecoration(
-                    color: Color.fromARGB(255, 233, 154, 36),
-                    borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(24),
-                        bottomRight: Radius.circular(24))),
-                child: const Text("Free Preview",
-                    style: TextStyle(fontSize: 18, color: Colors.white)),
+                  color: Color.fromARGB(255, 233, 154, 36),
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(24),
+                    bottomRight: Radius.circular(24),
+                  ),
+                ),
+                child: const Text(
+                  "Free Preview",
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.white,
+                  ),
+                ),
               ),
             ],
           ),
-          // Spacer(),
-
-          SizedBox(
-            height: SizeConfig.height(1),
-          ),
+          const SizedBox(height: 16),
+          // "You may also like" title
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text(
-                "    You can also like  ",
+                "    You may also like",
                 style: Styles.textStyle16.copyWith(
                   fontFamily: kGtSectraFine,
                 ),
               ),
             ],
           ),
+          const SizedBox(height: 12),
+          // Similar books list
           Expanded(
-              child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: 15,
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(18),
-                      child: Image.asset(
-                        height: SizeConfig.height(20),
-                        width: SizeConfig.width(30),
-                        AssetsImages.bookImage,
-                        fit: BoxFit.cover,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: similarBooks?.length ?? 0,
+              itemBuilder: (context, index) {
+                final book = similarBooks?[index];
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: CustomBookImage(
+                          imageUrl: book?.volumeInfo?.imageLinks?.thumbnail ??
+                              'https://via.placeholder.com/150',
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              );
-            },
-          ))
+                      const SizedBox(height: 8),
+                      Text(
+                        book?.volumeInfo?.title ?? "Unknown Title",
+                        style: Styles.textStyle14.copyWith(color: Colors.white),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      Text(
+                        book?.saleInfo?.saleability == "FOR_SALE"
+                            ? "\$19.99" // Replace with actual price
+                            : "Not for sale",
+                        style: Styles.textStyle14.copyWith(color: Colors.grey),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
         ],
       ),
     );
-  }
-}
-
-class HomeDetailsAppbar extends StatelessWidget {
-  const HomeDetailsAppbar({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return AppBar(
-        backgroundColor: kPrimaryColor,
-        leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: const Icon(
-              Icons.close,
-              color: Colors.white,
-            )),
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.shopping_cart_outlined,
-                  color: Colors.white,
-                )),
-          ],
-        ));
   }
 }

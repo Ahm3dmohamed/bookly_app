@@ -1,6 +1,5 @@
 import 'package:bookly/core/config/size_config.dart';
-import 'package:bookly/features/home/presentation/views/widgets/home_view_details.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:bookly/features/home/presentation/views/widgets/custom_book_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bookly/core/utils/widgets/custom_error_widget.dart';
@@ -9,92 +8,32 @@ import 'package:bookly/features/home/presentation/manager/featured_books_%20cubi
 import 'package:bookly/features/home/presentation/manager/featured_books_%20cubit/features_book_state.dart';
 
 class FeatureBookSListView extends StatelessWidget {
-  const FeatureBookSListView({
-    Key? key,
-  }) : super(key: key);
+  const FeatureBookSListView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);
-
-    double carouselImageHeight = MediaQuery.of(context).size.height * 0.25;
-    double carouselImageWidth = carouselImageHeight * 0.66;
 
     return BlocBuilder<FeaturesBooksCubit, FeaturesBookState>(
       builder: (BuildContext context, FeaturesBookState state) {
         if (state is FeaturesBookFailure) {
           return CustomErrorWidget(errMessage: state.errorMessage);
         } else if (state is FeaturesBookSuccess) {
-          // Access items from the single BookModel
-          final items = state.books.items ?? [];
-
-          if (items.isEmpty) {
-            return const Center(
-              child: Text(
-                "No books available",
-                style: TextStyle(color: Colors.white),
-              ),
-            );
-          }
-
           return SizedBox(
-            height: carouselImageHeight + 50, // Add extra space for the text
             child: ListView.separated(
-              scrollDirection: Axis.horizontal, // Set horizontal scrolling
-              padding: EdgeInsets.only(
-                left: SizeConfig.screenHeight * .001,
-                right: SizeConfig.screenHeight * .01,
-                top: SizeConfig.screenHeight * .01,
-              ),
-              itemCount: items.length,
+              scrollDirection: Axis.horizontal,
+              padding: const EdgeInsets.only(top: 16),
+              itemCount: state.books.items?.length ?? 0,
               separatorBuilder: (context, index) => SizedBox(
-                width: SizeConfig.screenHeight * .02,
+                width: SizeConfig.width(3),
               ), // Horizontal spacing
               itemBuilder: (context, index) {
-                final book = items[index].volumeInfo;
-                final imageUrl = book?.imageLinks?.thumbnail;
-                final title = book?.title ?? "Untitled";
-                final authors = book?.authors?.join(", ") ?? "Unknown Author";
-
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => HomeViewDetails(),
-                        ));
-                  },
-                  child: SizedBox(
-                    width: carouselImageWidth,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(15),
-                          child: CachedNetworkImage(
-                            imageUrl: imageUrl!,
-                            height: carouselImageHeight,
-                            width: carouselImageWidth,
-                            fit: BoxFit.fill,
-                            errorWidget: (context, url, error) =>
-                                const Icon(Icons.error_outline),
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        Flexible(
-                          child: Text(
-                            title,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                final book = state.books.items![index];
+                return SizedBox(
+                  width: SizeConfig.width(40),
+                  height: SizeConfig.height(25),
+                  child: CustomBookImage(
+                      imageUrl: book.volumeInfo?.imageLinks?.thumbnail ?? ""),
                 );
               },
             ),
@@ -106,3 +45,41 @@ class FeatureBookSListView extends StatelessWidget {
     );
   }
 }
+
+// class BookListviewItems extends StatelessWidget {
+//   const BookListviewItems({required this.bookModel, Key? key})
+//       : super(key: key);
+
+//   final Item bookModel; // Changed from `VolumeInfo` to `Item`.
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final volumeInfo = bookModel.volumeInfo;
+
+//     return GestureDetector(
+//       onTap: () {
+//         Navigator.push(
+//           context,
+//           MaterialPageRoute(
+//             builder: (context) => HomeViewDetails(
+//               volumeInfo: volumeInfo,
+//               similarBooks: [bookModel],
+//             ),
+//           ),
+//         );
+//       },
+//       child: Container(
+//         color: Colors.amber,
+//         child: Column(
+//           // crossAxisAlignment: CrossAxisAlignment.start,
+//           children: [
+//             CustomBookImage(
+//               imageUrl: volumeInfo?.imageLinks?.thumbnail ??
+//                   'https://via.placeholder.com/150', // Fallback image
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
