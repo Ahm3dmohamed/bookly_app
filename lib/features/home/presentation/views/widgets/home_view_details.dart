@@ -1,12 +1,21 @@
 import 'package:bookly/constants.dart';
 import 'package:bookly/core/config/size_config.dart';
+import 'package:bookly/core/utils/assets_images.dart';
 import 'package:bookly/core/utils/style.dart';
 import 'package:bookly/features/home/data/models/book_model/item.dart';
 import 'package:bookly/features/home/data/models/book_model/volume_info.dart';
+import 'package:bookly/features/home/presentation/manager/similler_book_cubit/similler_book_cubit.dart';
 import 'package:bookly/features/home/presentation/views/widgets/custom_book_image.dart';
 import 'package:bookly/features/home/presentation/views/widgets/custom_homedetails_appbar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../../core/utils/widgets/custom_error_widget.dart';
+import '../../../../../core/utils/widgets/custom_loadingindicator_widget.dart';
+import '../../../../../core/utils/widgets/custom_rounded_container.dart';
+import 'book_listview_items.dart';
+import 'similler_book_listview.dart';
 
 class HomeViewDetails extends StatelessWidget {
   final VolumeInfo? volumeInfo;
@@ -24,7 +33,7 @@ class HomeViewDetails extends StatelessWidget {
     double carouselImageWidth = carouselImageHeight * 0.66;
 
     return Scaffold(
-      appBar: HomeDetailsAppbar(),
+      appBar: const HomeDetailsAppbar(),
       body: Column(
         children: [
           // Book thumbnail
@@ -52,7 +61,7 @@ class HomeViewDetails extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  maxLines: 5,
+                  maxLines: 6,
                   volumeInfo?.description ?? "No description available.",
                   style: const TextStyle(
                     fontSize: 18,
@@ -82,45 +91,65 @@ class HomeViewDetails extends StatelessWidget {
           const SizedBox(height: 16),
           // Price and free preview buttons
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                padding: EdgeInsets.all(SizeConfig.width(3)),
-                margin: EdgeInsets.only(left: SizeConfig.width(9), top: 8),
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(24),
-                    bottomLeft: Radius.circular(24),
-                  ),
+              CustomRounderContainer(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(24),
+                  bottomLeft: Radius.circular(24),
                 ),
-                child: const Text(
-                  "     \$19.99     ",
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.black,
-                    fontFamily: "bookfont",
-                  ),
-                ),
+                color: Colors.white,
+                edgeInsetsGeometry:
+                    EdgeInsets.only(left: SizeConfig.width(9), top: 8),
+                txt: "Free Book ",
               ),
-              Container(
-                padding: EdgeInsets.all(SizeConfig.width(3)),
-                margin: EdgeInsets.only(right: SizeConfig.width(14), top: 8),
-                decoration: const BoxDecoration(
-                  color: Color.fromARGB(255, 233, 154, 36),
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(24),
-                    bottomRight: Radius.circular(24),
-                  ),
+              CustomRounderContainer(
+                borderRadius: const BorderRadius.only(
+                  topRight: Radius.circular(24),
+                  bottomRight: Radius.circular(24),
                 ),
-                child: const Text(
-                  "Free Preview",
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.white,
-                  ),
-                ),
+                color: const Color.fromARGB(255, 233, 154, 36),
+                edgeInsetsGeometry:
+                    EdgeInsets.only(right: SizeConfig.width(14), top: 8),
+                txt: volumeInfo?.contentVersion ?? "No Preview",
               ),
+              // Container(
+              //   padding: EdgeInsets.all(SizeConfig.width(3)),
+              //   margin: EdgeInsets.only(left: SizeConfig.width(9), top: 8),
+              //   decoration: const BoxDecoration(
+              //     color: Colors.white,
+              //     borderRadius: BorderRadius.only(
+              //       topLeft: Radius.circular(24),
+              //       bottomLeft: Radius.circular(24),
+              //     ),
+              //   ),
+              //   child: const Text(
+              //     "     \$19.99     ",
+              //     style: TextStyle(
+              //       fontSize: 18,
+              //       color: Colors.black,
+              //       fontFamily: "bookfont",
+              //     ),
+              //   ),
+              // ),
+              // Container(
+              //   padding: EdgeInsets.all(SizeConfig.width(3)),
+              //   margin: EdgeInsets.only(right: SizeConfig.width(14), top: 8),
+              //   decoration: const BoxDecoration(
+              //     color: Color.fromARGB(255, 233, 154, 36),
+              //     borderRadius: BorderRadius.only(
+              //       topRight: Radius.circular(24),
+              //       bottomRight: Radius.circular(24),
+              //     ),
+              //   ),
+              //   child: const Text(
+              //     "Free Preview",
+              //     style: TextStyle(
+              //       fontSize: 18,
+              //       color: Colors.white,
+              //     ),
+              //   ),
+              // ),
             ],
           ),
           const SizedBox(height: 16),
@@ -136,43 +165,9 @@ class HomeViewDetails extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 12),
           // Similar books list
-          Expanded(
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: similarBooks?.length ?? 0,
-              itemBuilder: (context, index) {
-                final book = similarBooks?[index];
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(12),
-                        child: CustomBookImage(
-                          imageUrl: book?.volumeInfo?.imageLinks?.thumbnail ??
-                              'https://via.placeholder.com/150',
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        book?.volumeInfo?.title ?? "Unknown Title",
-                        style: Styles.textStyle14.copyWith(color: Colors.white),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      Text(
-                        book?.saleInfo?.saleability == "FOR_SALE"
-                            ? "\$19.99" // Replace with actual price
-                            : "Not for sale",
-                        style: Styles.textStyle14.copyWith(color: Colors.grey),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
+          const Expanded(
+            child: SimillerBookListview(),
           ),
         ],
       ),

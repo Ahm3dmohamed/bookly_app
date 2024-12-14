@@ -47,4 +47,26 @@ class HomeRepoImpl extends HomeRepo {
       ));
     }
   }
+
+  @override
+  Future<Either<Failures, BookModel>> fetchSimillerBooks(
+      {int startIndex = 0}) async {
+    try {
+      var data = await apiService.get(
+          endPoint: 'volumes?q=subject:programming&Sorting=relevance');
+
+      BookModel books = BookModel.fromJson(data);
+      //
+      return right(books);
+    } on Exception catch (e) {
+      if (e is DioException) {
+        return left(
+          ServerFailure.fromDioError(e),
+        );
+      }
+      return left(ServerFailure(
+        e.toString(),
+      ));
+    }
+  }
 }
