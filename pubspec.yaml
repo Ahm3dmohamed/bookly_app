@@ -38,6 +38,7 @@ dependencies:
     sdk: flutter
   flutter_bloc: ^8.1.6
   flutter_getit: ^3.0.1
+  flutter_launcher_icons: ^0.14.2
   font_awesome_flutter: ^10.7.0
   get_it: ^7.7.0
   google_fonts: ^6.2.1
@@ -46,12 +47,18 @@ dependencies:
   overlapped_carousel: ^1.0.2
   page_transition: ^2.1.0
   shimmer: ^3.0.0
+  url_launcher: ^6.3.1
 
 dev_dependencies:
   flutter_lints: ^4.0.0
   flutter_test:
     sdk: flutter
 
+
+flutter_icons:
+  image_path: "assets/images/book.jpeg" 
+  android: true
+  ios: true
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter packages.

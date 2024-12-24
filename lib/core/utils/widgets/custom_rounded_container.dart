@@ -5,6 +5,7 @@ import '../style.dart';
 
 // ignore: must_be_immutable
 class CustomRounderContainer extends StatelessWidget {
+  final Function onTap;
   String txt;
   Color color;
   BorderRadius borderRadius;
@@ -15,6 +16,7 @@ class CustomRounderContainer extends StatelessWidget {
     required this.edgeInsetsGeometry,
     required this.color,
     super.key,
+    required this.onTap,
   });
 
   @override

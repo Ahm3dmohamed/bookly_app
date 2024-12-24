@@ -1,6 +1,6 @@
 import 'package:bookly/core/utils/assets_images.dart';
-import 'package:bookly/features/home/presentation/views/search/search.dart';
 import 'package:bookly/constants.dart';
+import 'package:bookly/core/utils/features/home/presentation/views/search/search.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
