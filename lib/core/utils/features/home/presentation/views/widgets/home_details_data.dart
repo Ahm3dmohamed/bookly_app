@@ -23,27 +23,19 @@ class HomedetailsDate extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            maxLines: 6,
+            maxLines: 7,
             volumeInfo?.description ?? "No description available.",
-            style: const TextStyle(
-              fontSize: 18,
-              color: Colors.grey,
-              fontFamily: "bookfont",
-            ),
+            style: Styles.textStyle16.copyWith(color: Colors.grey),
             textAlign: TextAlign.center,
+            textDirection: TextDirection.ltr,
           ),
-          const SizedBox(height: 8),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Icon(Icons.star, color: Colors.amber),
               Text(
                 "4.8 | ${volumeInfo?.pageCount?.toString() ?? "No Pages"} pages",
-                style: const TextStyle(
-                  fontSize: 16,
-                  color: Colors.grey,
-                  fontFamily: "bookfont",
-                ),
+                style: Styles.textStyle16.copyWith(color: Colors.white),
               ),
             ],
           ),

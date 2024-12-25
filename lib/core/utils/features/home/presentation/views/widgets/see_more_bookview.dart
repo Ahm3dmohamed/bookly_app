@@ -1,4 +1,6 @@
 import 'package:bookly/core/config/size_config.dart';
+import 'package:bookly/core/utils/features/home/data/models/book_model/book_model.dart';
+import 'package:bookly/core/utils/features/home/data/models/book_model/item.dart';
 import 'package:bookly/core/utils/features/home/presentation/manager/similler_book_cubit/similler_book_cubit.dart';
 import 'package:bookly/core/utils/style.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -7,19 +9,26 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bookly/core/utils/widgets/custom_error_widget.dart';
 import 'package:bookly/core/utils/widgets/custom_loadingindicator_widget.dart';
 
+import 'home_view_details.dart';
+
 class SeeMoreBooksView extends StatelessWidget {
-  const SeeMoreBooksView({super.key});
+  final Item items;
+
+  SeeMoreBooksView({super.key, required this.items});
 
   @override
   Widget build(BuildContext context) {
     context.read<SimillerBookCubit>().fetchSimillerBook(); // Trigger data fetch
-
     return Scaffold(
       appBar: AppBar(
-        leading: const Icon(
-          Icons.arrow_back_ios,
-          color: Colors.white,
-        ),
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(
+              Icons.arrow_back_ios,
+              color: Colors.white,
+            )),
         backgroundColor: Colors.transparent,
         title: const Text(
           "More Books",
@@ -50,7 +59,6 @@ class SeeMoreBooksView extends StatelessWidget {
               itemCount: books.length,
               itemBuilder: (context, index) {
                 final book = books[index].volumeInfo;
-
                 return Card(
                   color: Colors.transparent,
                   margin: const EdgeInsets.only(bottom: 16),
@@ -61,13 +69,26 @@ class SeeMoreBooksView extends StatelessWidget {
                     children: [
                       // Book Thumbnail
                       if (book?.imageLinks?.thumbnail != null)
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
-                          child: CachedNetworkImage(
-                            imageUrl: book!.imageLinks!.thumbnail!,
-                            width: 110,
-                            height: 180,
-                            fit: BoxFit.fill,
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => HomeViewDetails(
+                                  volumeInfo: book,
+                                  items: items,
+                                ),
+                              ),
+                            );
+                          },
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: CachedNetworkImage(
+                              imageUrl: book!.imageLinks!.thumbnail!,
+                              width: SizeConfig.screenWidth * .30,
+                              height: SizeConfig.screenHeight * .20,
+                              fit: BoxFit.fill,
+                            ),
                           ),
                         )
                       else
@@ -81,7 +102,9 @@ class SeeMoreBooksView extends StatelessWidget {
                           ),
                         ),
 
-                      const SizedBox(width: 16),
+                      SizedBox(
+                        width: SizeConfig.width(4),
+                      ),
 
                       // Book Info
                       Expanded(
@@ -96,8 +119,9 @@ class SeeMoreBooksView extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                             ),
 
-                            const SizedBox(height: 8),
-
+                            SizedBox(
+                              width: SizeConfig.width(5),
+                            ),
                             // Book Authors
                             if (book?.authors != null &&
                                 book!.authors!.isNotEmpty)
@@ -114,8 +138,9 @@ class SeeMoreBooksView extends StatelessWidget {
                                 "Author: Unknown",
                                 style: TextStyle(color: Colors.grey),
                               ),
-                            const SizedBox(height: 12),
-
+                            SizedBox(
+                              width: SizeConfig.height(9),
+                            ),
                             Text(
                               book?.publishedDate ?? 'No Date Available',
                               style: Styles.textStyle14

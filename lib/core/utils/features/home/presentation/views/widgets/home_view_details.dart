@@ -5,9 +5,10 @@ import 'package:bookly/core/utils/features/home/data/models/book_model/item.dart
 import 'package:bookly/core/utils/features/home/data/models/book_model/volume_info.dart';
 import 'package:bookly/core/utils/features/home/presentation/views/widgets/custom_homedetails_appbar.dart';
 import 'package:bookly/core/utils/style.dart';
-import 'package:bookly/core/utils/widgets/custom_rounded_container.dart';
+import 'package:bookly/core/utils/widgets/custom_button.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'home_details_data.dart';
 import 'see_more_bookview.dart';
@@ -25,8 +26,8 @@ class HomeViewDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double carouselImageHeight = MediaQuery.of(context).size.height * 0.30;
-    double carouselImageWidth = carouselImageHeight * 0.66;
+    double carouselImageHeight = MediaQuery.of(context).size.height;
+    double carouselImageWidth = carouselImageHeight;
 
     return Scaffold(
       appBar: const HomeDetailsAppbar(),
@@ -36,8 +37,8 @@ class HomeViewDetails extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(12),
             child: CachedNetworkImage(
-              height: carouselImageHeight,
-              width: carouselImageWidth,
+              height: carouselImageHeight * .25,
+              width: carouselImageWidth * .16,
               imageUrl: volumeInfo?.imageLinks?.thumbnail ??
                   'https://via.placeholder.com/150',
               fit: BoxFit.cover,
@@ -45,54 +46,42 @@ class HomeViewDetails extends StatelessWidget {
                   const Icon(Icons.error, color: Colors.red),
             ),
           ),
-          const SizedBox(height: 8),
           HomedetailsDate(volumeInfo: volumeInfo),
-          const SizedBox(height: 10),
           // Price and free preview buttons
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              CustomRounderContainer(
+              CustomButton(
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(24),
                   bottomLeft: Radius.circular(24),
                 ),
                 color: Colors.white,
-                edgeInsetsGeometry:
-                    EdgeInsets.only(left: SizeConfig.width(9), top: 8),
-                txt: "Free Book ",
-                onTap: () {},
+                margin: EdgeInsets.only(left: SizeConfig.width(6), top: 2),
+                text: "Free Book ",
               ),
 
               // The Best way here to use TextButton.StyleForm Instead of Container
 
-              InkWell(
-                onTap: () async {
-                  Uri uri = Uri.parse(items.accessInfo?.pdf.toString() ?? "");
+              CustomButton(
+                onPressed: () async {
+                  Uri uri =
+                      Uri.parse(items.volumeInfo?.canonicalVolumeLink ?? "");
                   if (await canLaunchUrl(uri)) {
                     await launchUrl(uri);
                   }
                 },
-                child: CustomRounderContainer(
-                  borderRadius: const BorderRadius.only(
-                    topRight: Radius.circular(24),
-                    bottomRight: Radius.circular(24),
-                  ),
-                  color: const Color.fromARGB(255, 233, 154, 36),
-                  edgeInsetsGeometry:
-                      EdgeInsets.only(right: SizeConfig.width(14), top: 8),
-                  txt: volumeInfo?.contentVersion ?? "No Preview",
-                  onTap: () async {
-                    Uri uri = Uri.parse(items?.selfLink ?? "");
-                    if (await canLaunchUrl(uri)) {
-                      await launchUrl(uri);
-                    }
-                  },
+                borderRadius: const BorderRadius.only(
+                  topRight: Radius.circular(24),
+                  bottomRight: Radius.circular(24),
                 ),
+                color: const Color.fromARGB(255, 233, 154, 36),
+                margin: EdgeInsets.only(right: SizeConfig.width(6), top: 2),
+                text: " Preview",
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 8),
           // "You may also like" title
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -106,11 +95,11 @@ class HomeViewDetails extends StatelessWidget {
               GestureDetector(
                 onTap: () {
                   Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const SeeMoreBooksView(),
-                    ),
-                  );
+                      context,
+                      PageTransition(
+                          duration: searchTransition,
+                          child: SeeMoreBooksView(items: items),
+                          type: PageTransitionType.bottomToTop));
                 },
                 child: Text(
                   "See More",

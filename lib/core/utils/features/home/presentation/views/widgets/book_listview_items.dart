@@ -3,7 +3,9 @@ import 'package:bookly/core/utils/features/home/data/models/book_model/item.dart
 import 'package:bookly/core/utils/features/home/presentation/views/widgets/home_view_details.dart';
 import 'package:bookly/core/utils/style.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 
+import '../../../../../../../constants.dart';
 import '../../../data/models/book_model/volume_info.dart';
 import 'book_rating.dart';
 import 'custom_book_image.dart';
@@ -21,11 +23,13 @@ class BestsellerListviewItems extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(
-            builder: (context) => HomeViewDetails(
+          PageTransition(
+            duration: searchTransition,
+            child: HomeViewDetails(
               volumeInfo: book,
               items: items,
             ),
+            type: PageTransitionType.rightToLeft,
           ),
         );
       },
@@ -37,7 +41,7 @@ class BestsellerListviewItems extends StatelessWidget {
               imageUrl: book?.imageLinks?.thumbnail ??
                   'https://via.placeholder.com/150',
             ),
-            const SizedBox(width: 18),
+            const SizedBox(width: 14),
             Expanded(
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,28 +49,26 @@ class BestsellerListviewItems extends StatelessWidget {
                     Text(book?.title ?? "Untitled",
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        style: Styles.textStyle24),
-                    const SizedBox(height: 5),
+                        style: Styles.textStyle18),
                     Text(book?.authors?.join(", ") ?? "Unknown Author",
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: Styles.textStyle16.copyWith(color: Colors.grey)),
+                        style: Styles.textStyle14.copyWith(color: Colors.grey)),
                     const SizedBox(height: 5),
                     Row(
                       children: [
-                        const Text("Free ", style: Styles.textStyle20),
-                        Spacer(),
+                        const Text("Free ", style: Styles.textStyle16),
+                        const Spacer(),
                         BookRating(
                           count: book?.pageCount?.toString() ?? "N/A",
                           rate: "4,8",
                         ),
                       ],
                     ),
-                    const SizedBox(height: 10),
                     Row(
                       children: [
                         Text(book?.publishedDate ?? "2004",
-                            style: Styles.textStyle20
+                            style: Styles.textStyle16
                                 .copyWith(color: Colors.grey)),
                       ],
                     ),

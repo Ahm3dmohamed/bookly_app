@@ -6,7 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bookly/core/utils/widgets/custom_error_widget.dart';
 import 'package:bookly/core/utils/widgets/custom_loadingindicator_widget.dart';
+import 'package:page_transition/page_transition.dart';
 
+import '../../../../../../../constants.dart';
 import 'home_view_details.dart';
 
 class FeatureBookSListView extends StatelessWidget {
@@ -34,17 +36,19 @@ class FeatureBookSListView extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) => HomeViewDetails(
+                    PageTransition(
+                      duration: searchTransition,
+                      child: HomeViewDetails(
                         volumeInfo: book.volumeInfo,
                         items: book,
                       ),
+                      type: PageTransitionType.rightToLeft,
                     ),
                   );
                 },
                 child: SizedBox(
-                  width: SizeConfig.width(40),
-                  height: SizeConfig.height(25),
+                  width: SizeConfig.width(33),
+                  height: SizeConfig.height(22),
                   child: CustomBookImage(
                       imageUrl: book.volumeInfo?.imageLinks?.thumbnail ?? ""),
                 ),

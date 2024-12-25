@@ -26,19 +26,19 @@ class HomeView extends StatelessWidget {
                   children: [
                     const CustomAppbar(),
                     SizedBox(
-                      height: SizeConfig.height(27),
+                      height: SizeConfig.height(25),
                       child: const FeatureBookSListView(),
                     ),
                     const Padding(
-                      padding: EdgeInsets.only(top: 20, bottom: 4),
+                      padding: EdgeInsets.only(top: 10, bottom: 2),
                       child: Row(
                         children: [
-                          Text("NewestBooks ", style: Styles.textStyle20),
+                          Text("NewestBooks ", style: Styles.textStyle18),
                         ],
                       ),
                     ),
                     SizedBox(
-                      height: SizeConfig.height(50), // Define height explicitly
+                      height: SizeConfig.height(64), // Define height explicitly
                       child: const BestSellerBookListview(),
                     ),
                   ],
