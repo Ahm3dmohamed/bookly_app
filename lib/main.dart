@@ -9,7 +9,7 @@ import 'package:bookly/core/utils/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-void main() {
+void main() async {
   setupServiceLocator();
   runApp(const BooklyApp());
 }

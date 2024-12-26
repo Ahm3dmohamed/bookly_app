@@ -35,7 +35,13 @@ class ShoppingCartScreen extends StatelessWidget {
               child: Text('Your cart is empty!'),
             );
           }
-          return CustomListview(books: cartItems, items: items);
+          return Column(
+            children: [
+              Expanded(
+                child: CustomListview(books: cartItems, items: items),
+              ),
+            ],
+          );
         },
       ),
     );

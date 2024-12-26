@@ -1,3 +1,4 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:bookly/core/config/size_config.dart';
 import 'package:bookly/core/utils/features/home/presentation/manager/cart_cubit/cart_cubit.dart';
 import 'package:bookly/core/utils/features/home/presentation/manager/featured_books_%20cubit/features_book_state.dart';
@@ -34,12 +35,6 @@ class FeatureBookSListView extends StatelessWidget {
             itemBuilder: (context, index) {
               final book = state.books.items![index];
               return GestureDetector(
-                onLongPress: () {
-                  BlocProvider.of<CartCubit>(context).addBookToCart(book);
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content:
-                          Text("${book.volumeInfo?.title} added to Cart!!")));
-                },
                 onTap: () {
                   Navigator.push(
                     context,

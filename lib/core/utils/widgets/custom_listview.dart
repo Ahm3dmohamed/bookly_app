@@ -1,11 +1,14 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:bookly/constants.dart';
 import 'package:bookly/core/config/size_config.dart';
 import 'package:bookly/core/utils/features/home/presentation/views/widgets/home_view_details.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
 
 import '../features/home/data/models/book_model/item.dart';
+import '../features/home/presentation/manager/cart_cubit/cart_cubit.dart';
 import '../style.dart';
 
 class CustomListview extends StatelessWidget {
@@ -115,6 +118,29 @@ class CustomListview extends StatelessWidget {
                     ),
                   ],
                 ),
+              ),
+
+              IconButton(
+                icon: const Icon(Icons.delete),
+                onPressed: () {
+                  BlocProvider.of<CartCubit>(context)
+                      .removeBookFromCart(books[index]);
+                  var snackBar = SnackBar(
+                    elevation: 0,
+                    behavior: SnackBarBehavior.floating,
+                    backgroundColor: Colors.transparent,
+                    padding: EdgeInsets.all(SizeConfig.screenHeight * .04),
+                    content: const AwesomeSnackbarContent(
+                      title: 'Done',
+                      message: 'Book Removed  !',
+                      contentType: ContentType.failure,
+                    ),
+                  );
+
+                  ScaffoldMessenger.of(context)
+                    ..hideCurrentSnackBar()
+                    ..showSnackBar(snackBar);
+                },
               ),
             ],
           ),

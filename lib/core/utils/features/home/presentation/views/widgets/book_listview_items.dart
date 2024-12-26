@@ -3,10 +3,12 @@ import 'package:bookly/core/utils/features/home/data/models/book_model/item.dart
 import 'package:bookly/core/utils/features/home/presentation/views/widgets/home_view_details.dart';
 import 'package:bookly/core/utils/style.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
-
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import '../../../../../../../constants.dart';
 import '../../../data/models/book_model/volume_info.dart';
+import '../../manager/cart_cubit/cart_cubit.dart';
 import 'book_rating.dart';
 import 'custom_book_image.dart';
 
@@ -20,6 +22,24 @@ class BestsellerListviewItems extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onLongPress: () {
+        BlocProvider.of<CartCubit>(context).addBookToCart(items);
+        var snackBar = SnackBar(
+          elevation: 0,
+          behavior: SnackBarBehavior.floating,
+          backgroundColor: Colors.transparent,
+          padding: EdgeInsets.all(SizeConfig.screenHeight * .04),
+          content: const AwesomeSnackbarContent(
+            title: 'Successfully',
+            message: 'Book Added !',
+            contentType: ContentType.success,
+          ),
+        );
+
+        ScaffoldMessenger.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(snackBar);
+      },
       onTap: () {
         Navigator.push(
           context,

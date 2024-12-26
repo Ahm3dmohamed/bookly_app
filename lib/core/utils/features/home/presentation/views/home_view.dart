@@ -33,7 +33,7 @@ class HomeView extends StatelessWidget {
                       padding: EdgeInsets.only(top: 10, bottom: 2),
                       child: Row(
                         children: [
-                          Text("NewestBooks ", style: Styles.textStyle18),
+                          Text("Best Seller Book ", style: Styles.textStyle18),
                         ],
                       ),
                     ),
