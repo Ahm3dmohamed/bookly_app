@@ -1,6 +1,5 @@
 import 'package:bookly/constants.dart';
 import 'package:bookly/core/config/size_config.dart';
-import 'package:bookly/core/utils/features/home/data/models/book_model/book_model.dart';
 import 'package:bookly/core/utils/features/home/data/models/book_model/item.dart';
 import 'package:bookly/core/utils/features/home/data/models/book_model/volume_info.dart';
 import 'package:bookly/core/utils/features/home/presentation/views/widgets/custom_homedetails_appbar.dart';
@@ -17,7 +16,6 @@ import 'similler_book_listview.dart';
 class HomeViewDetails extends StatelessWidget {
   final VolumeInfo? volumeInfo;
   final Item items;
-
   const HomeViewDetails({
     required this.volumeInfo,
     required this.items,

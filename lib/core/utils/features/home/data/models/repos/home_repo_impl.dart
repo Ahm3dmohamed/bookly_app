@@ -86,27 +86,47 @@ class HomeRepoImpl extends HomeRepo {
   HomeRepoImpl(this.apiService);
 
   @override
-  Future<Either<Failures, BookModel>> fetchFutureBooks() async {
+  Future<Either<Failures, BookModel>> fetchFutureBooks({
+    int startIndex = 0,
+    int maxResults = 40,
+  }) async {
     return _fetchBooks(
-      endpoint: 'volumes?Filtering=free-ebooks&q=inpublisher',
+      endpoint:
+          'volumes?Filtering=free-ebooks&q=inpublisher&startIndex=$startIndex&maxResults=$maxResults',
     );
   }
 
   @override
-  Future<Either<Failures, BookModel>> fetchNewsBestBooks(
-      {int startIndex = 0}) async {
+  Future<Either<Failures, BookModel>> fetchNewsBestBooks({
+    int startIndex = 0,
+    int maxResults = 40,
+  }) async {
     return _fetchBooks(
       endpoint:
-          'volumes?Filtering=free-ebooks&q=subject&startIndex=$startIndex',
+          'volumes?Filtering=free-ebooks&q=subject&startIndex=$startIndex&maxResults=$maxResults',
     );
   }
 
   @override
-  Future<Either<Failures, BookModel>> fetchSimillerBooks(
-      {int startIndex = 0}) async {
+  Future<Either<Failures, BookModel>> fetchSimillerBooks({
+    int startIndex = 0,
+    int maxResults = 40,
+  }) async {
     return _fetchBooks(
       endpoint:
-          'volumes?Filtering=free-ebooks&q=intitle&startIndex=$startIndex',
+          'volumes?Filtering=free-ebooks&q=intitle&startIndex=$startIndex&maxResults=$maxResults',
+    );
+  }
+
+  @override
+  Future<Either<Failures, BookModel>> performSearch({
+    required String query,
+    int startIndex = 0,
+    int maxResults = 40,
+  }) async {
+    return _fetchBooks(
+      endpoint:
+          'volumes?q=$query&startIndex=$startIndex&maxResults=$maxResults',
     );
   }
 

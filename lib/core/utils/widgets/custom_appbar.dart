@@ -25,7 +25,7 @@ class CustomAppbar extends StatelessWidget {
               PageTransition(
                 duration: searchTransition,
                 type: PageTransitionType.bottomToTop,
-                child: const Search(),
+                child: Search(),
               ),
             );
           },
