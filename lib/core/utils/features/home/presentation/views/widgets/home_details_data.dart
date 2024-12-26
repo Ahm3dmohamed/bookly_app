@@ -1,3 +1,4 @@
+import 'package:bookly/core/config/size_config.dart';
 import 'package:bookly/core/utils/style.dart';
 import 'package:flutter/material.dart';
 
@@ -21,14 +22,24 @@ class HomedetailsDate extends StatelessWidget {
             volumeInfo?.title ?? "Unknown Title",
             style: Styles.textStyle18.copyWith(color: Colors.white),
           ),
-          const SizedBox(height: 8),
-          Text(
-            maxLines: 7,
-            volumeInfo?.description ?? "No description available.",
-            style: Styles.textStyle16.copyWith(color: Colors.grey),
-            textAlign: TextAlign.center,
-            textDirection: TextDirection.ltr,
+          const SizedBox(height: 5),
+          SizedBox(
+            height: SizeConfig.screenHeight * .22,
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.only(
+                    left: SizeConfig.screenHeight * .02,
+                    right: SizeConfig.screenHeight * .02),
+                child: Text(
+                  volumeInfo?.description ?? "No description available.",
+                  style: Styles.textStyle16.copyWith(color: Colors.grey),
+                  textAlign: TextAlign.start,
+                  textDirection: TextDirection.ltr,
+                ),
+              ),
+            ),
           ),
+          const SizedBox(height: 8),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

@@ -92,7 +92,7 @@ class HomeRepoImpl extends HomeRepo {
   }) async {
     return _fetchBooks(
       endpoint:
-          'volumes?Filtering=free-ebooks&q=inpublisher&startIndex=$startIndex&maxResults=$maxResults',
+          'volumes?Filtering=free-ebooks&q=horror&startIndex=$startIndex&maxResults=$maxResults',
     );
   }
 
@@ -103,7 +103,7 @@ class HomeRepoImpl extends HomeRepo {
   }) async {
     return _fetchBooks(
       endpoint:
-          'volumes?Filtering=free-ebooks&q=subject&startIndex=$startIndex&maxResults=$maxResults',
+          'volumes?Filtering=free-ebooks&q=inauthor&startIndex=$startIndex&maxResults=$maxResults',
     );
   }
 
@@ -114,7 +114,7 @@ class HomeRepoImpl extends HomeRepo {
   }) async {
     return _fetchBooks(
       endpoint:
-          'volumes?Filtering=free-ebooks&q=intitle&startIndex=$startIndex&maxResults=$maxResults',
+          'volumes?Filtering=free-ebooks&q=action&startIndex=$startIndex&maxResults=$maxResults',
     );
   }
 

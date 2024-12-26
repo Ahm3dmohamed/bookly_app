@@ -1,5 +1,6 @@
 import 'package:bookly/constants.dart';
 import 'package:bookly/core/utils/features/home/data/models/repos/home_repo_impl.dart';
+import 'package:bookly/core/utils/features/home/presentation/manager/cart_cubit/cart_cubit.dart';
 import 'package:bookly/core/utils/features/home/presentation/manager/featured_books_%20cubit/features_books_cubit.dart';
 import 'package:bookly/core/utils/features/home/presentation/manager/newest_books_cubit/newest_book_cubit.dart';
 import 'package:bookly/core/utils/features/home/presentation/manager/similler_book_cubit/similler_book_cubit.dart';
@@ -32,6 +33,7 @@ class BooklyApp extends StatelessWidget {
           create: (context) =>
               SimillerBookCubit(getIt.get<HomeRepoImpl>())..fetchSimillerBook(),
         ),
+        BlocProvider(create: (_) => CartCubit()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

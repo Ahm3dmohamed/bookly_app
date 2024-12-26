@@ -50,13 +50,19 @@ class HomeViewDetails extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               CustomButton(
+                onPressed: () async {
+                  Uri uri = Uri.parse(items.volumeInfo?.previewLink ?? "");
+                  if (await canLaunchUrl(uri)) {
+                    await launchUrl(uri);
+                  }
+                },
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(24),
                   bottomLeft: Radius.circular(24),
                 ),
                 color: Colors.white,
                 margin: EdgeInsets.only(left: SizeConfig.width(6), top: 2),
-                text: "Free Book ",
+                text: "Preview ",
               ),
 
               // The Best way here to use TextButton.StyleForm Instead of Container
@@ -75,7 +81,7 @@ class HomeViewDetails extends StatelessWidget {
                 ),
                 color: const Color.fromARGB(255, 233, 154, 36),
                 margin: EdgeInsets.only(right: SizeConfig.width(6), top: 2),
-                text: " Preview",
+                text: " Download",
               ),
             ],
           ),
