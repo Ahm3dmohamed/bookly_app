@@ -30,6 +30,7 @@ class SearchListviewData extends StatelessWidget {
               );
             },
             child: CustomBookImage(
+              book: items,
               imageUrl: items.volumeInfo?.imageLinks?.thumbnail ?? "",
             ),
           ),

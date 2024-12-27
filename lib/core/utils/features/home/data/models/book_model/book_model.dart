@@ -8,7 +8,7 @@ class BookModel extends Equatable {
 
   const BookModel({this.kind, this.totalItems, this.items});
 
-  factory BookModel.fromJson(Map<String, dynamic> json) => BookModel(
+  factory BookModel.fromJson(Map<dynamic, dynamic> json) => BookModel(
         kind: json['kind'] as String?,
         totalItems: json['totalItems'] as int?,
         items: (json['items'] as List<dynamic>?)

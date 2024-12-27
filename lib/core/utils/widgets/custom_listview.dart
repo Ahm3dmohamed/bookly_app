@@ -6,7 +6,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
-
 import '../features/home/data/models/book_model/item.dart';
 import '../features/home/presentation/manager/cart_cubit/cart_cubit.dart';
 import '../style.dart';
@@ -82,18 +81,15 @@ class CustomListview extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Book Title
                     Text(
                       book?.title ?? 'No Title Available',
                       style: Styles.textStyle16,
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
                     ),
-
                     SizedBox(
                       width: SizeConfig.width(5),
                     ),
-                    // Book Authors
                     if (book?.authors != null && book!.authors!.isNotEmpty)
                       Text(
                         "by ${book.authors!.join(', ')}",
@@ -132,7 +128,7 @@ class CustomListview extends StatelessWidget {
                     padding: EdgeInsets.all(SizeConfig.screenHeight * .04),
                     content: const AwesomeSnackbarContent(
                       title: 'Done',
-                      message: 'Book Removed  !',
+                      message: 'Book Removed!',
                       contentType: ContentType.failure,
                     ),
                   );

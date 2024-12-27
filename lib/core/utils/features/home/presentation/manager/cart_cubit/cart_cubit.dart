@@ -20,6 +20,14 @@ class CartCubit extends Cubit<List<Item>> {
     _saveCart(updatedCart);
   }
 
+  void toggleFavorite(Item book) {
+    if (state.contains(book)) {
+      removeBookFromCart(book); // If it's a favorite, remove it
+    } else {
+      addBookToCart(book); // If not, add it
+    }
+  }
+
   Future<void> _saveCart(List<Item> cart) async {
     final prefs = await SharedPreferences.getInstance();
     final cartJson = jsonEncode(cart.map((e) => e.toJson()).toList());

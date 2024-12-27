@@ -58,6 +58,7 @@ class BestsellerListviewItems extends StatelessWidget {
         child: Row(
           children: [
             CustomBookImage(
+              book: items,
               imageUrl: book?.imageLinks?.thumbnail ??
                   'https://via.placeholder.com/150',
             ),

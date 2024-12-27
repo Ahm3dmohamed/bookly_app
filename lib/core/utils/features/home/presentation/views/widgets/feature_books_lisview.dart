@@ -52,7 +52,9 @@ class FeatureBookSListView extends StatelessWidget {
                   width: SizeConfig.width(33),
                   height: SizeConfig.height(22),
                   child: CustomBookImage(
-                      imageUrl: book.volumeInfo?.imageLinks?.thumbnail ?? ""),
+                    imageUrl: book.volumeInfo?.imageLinks?.thumbnail ?? "",
+                    book: book,
+                  ),
                 ),
               );
             },

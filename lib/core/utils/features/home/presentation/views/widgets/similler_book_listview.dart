@@ -78,6 +78,7 @@ class SimillerBookListview extends StatelessWidget {
                       ..showSnackBar(snackBar);
                   },
                   child: CustomBookImage(
+                    book: item,
                     imageUrl:
                         items[index].volumeInfo?.imageLinks?.thumbnail ?? "",
                   ),

@@ -32,6 +32,7 @@ dependencies:
   cached_network_image: ^3.4.1
   carousel_slider: ^5.0.0
   cloud_firestore: ^5.6.0
+  connectivity_plus: ^6.1.1
   cupertino_icons: ^1.0.8
   dartz: ^0.10.1
   dio: ^5.7.0
@@ -44,6 +45,7 @@ dependencies:
   font_awesome_flutter: ^10.7.0
   get_it: ^7.7.0
   google_fonts: ^6.2.1
+  hive: ^2.2.3
   horizontal_card_pager: ^1.1.1
   lottie: ^3.1.3
   overlapped_carousel: ^1.0.2
